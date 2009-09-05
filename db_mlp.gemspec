@@ -24,16 +24,19 @@ Gem::Specification.new do |s|
      "VERSION",
      "benchmarks/data.rdb",
      "benchmarks/mlp_benchmark.rb",
+     "db_mlp.gemspec",
      "examples/backpropagation_example.rb",
      "examples/data.rdb",
      "examples/patterns_with_base_noise.rb",
      "examples/patterns_with_noise.rb",
      "examples/training_patterns.rb",
      "examples/xor.rb",
+     "lib/db_mlp.rb",
      "lib/models/neuron.rb",
      "profiling/profile.rb",
      "test/db/data.rdb",
-     "test/helper.rb"
+     "test/helper.rb",
+     "test/test_db_mlp.rb"
   ]
   s.homepage = %q{http://github.com/reddavis/dbmlp}
   s.rdoc_options = ["--charset=UTF-8"]
