@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/mlp'
+require File.dirname(__FILE__) + '/../lib/db_mlp'
 require 'rubygems'
 require 'ruby-prof'
 

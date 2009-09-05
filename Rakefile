@@ -4,11 +4,11 @@ require 'rake'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "mlp"
-    gem.summary = %Q{Multi-Layer Perceptron Neural Network in Ruby}
-    gem.description = %Q{Multi-Layer Perceptron Neural Network in Ruby}
+    gem.name = "db_mlp"
+    gem.summary = %Q{Database backed Multi-Layer Perceptron Neural Network in Ruby}
+    gem.description = %Q{Database backed Multi-Layer Perceptron Neural Network in Ruby}
     gem.email = "reddavis@gmail.com"
-    gem.homepage = "http://github.com/reddavis/mlp"
+    gem.homepage = "http://github.com/reddavis/dbmlp"
     gem.authors = ["reddavis"]
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

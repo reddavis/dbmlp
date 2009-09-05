@@ -21,7 +21,7 @@ This is first release and because of that it's a bit slow, I'll probably try out
   testing = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
   validation = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
   
-  a.train(training, testing, validation, 3001)
+  a.train(training, testing, validation, number_of_training_iterations)
   
   puts "Test data"
   puts "[0,0] = > #{a.feed_forward([0,0]).inspect}"

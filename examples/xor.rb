@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/dbmlp'
+require File.dirname(__FILE__) + '/../lib/db_mlp'
 require 'benchmark'
 
 db = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/data.rdb"

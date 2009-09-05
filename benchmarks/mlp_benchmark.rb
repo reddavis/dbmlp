@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'benchmarker'
 require 'benchmark'
-require File.dirname(__FILE__) + '/../lib/dbmlp'
+require File.dirname(__FILE__) + '/../lib/db_mlp'
 
 Benchmarker.go('lib') do
   
