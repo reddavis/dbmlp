@@ -1,0 +1,41 @@
+= Multi-Layer Perceptron Neural Network
+
+This is a sqlite backed version of my previous MLP.
+
+This version also provides training validation to prevent the MLP from overfitting.
+
+This is first release and because of that it's a bit slow, I'll probably try out using Memcached or something else as its data store.
+
+== Install
+
+  gem sources -a http://gems.github.com
+  sudo gem install reddavis-db_mlp
+
+== How To Use
+  require 'rubygems'
+  require 'db_mlp'
+  
+  a = DBMLP.new(path_to_db, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
+
+  training = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
+  testing = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
+  validation = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
+  
+  a.train(training, testing, validation, 3001)
+  
+  puts "Test data"
+  puts "[0,0] = > #{a.feed_forward([0,0]).inspect}"
+  puts "[0,1] = > #{a.feed_forward([0,1]).inspect}"
+  puts "[1,0] = > #{a.feed_forward([1,0]).inspect}"
+  puts "[1,1] = > #{a.feed_forward([1,1]).inspect}"
+
+== Benchmarks
+
+  The above example produces these times
+  
+                  user     system      total        real
+  DBMLP    9.100000   0.040000   9.140000 (  9.170872)
+
+== Copyright
+
+Copyright (c) 2009 Red Davis. See LICENSE for details.
