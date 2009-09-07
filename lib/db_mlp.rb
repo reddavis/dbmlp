@@ -45,6 +45,7 @@ class DBMLP
           break
         end
       end
+      puts "Iteration #{i}/#{n}"
       training = training.sort_by { rand } #shaken or stirred?
       training.each do |t|
         input, target = t[0], t[1]
@@ -65,7 +66,6 @@ class DBMLP
     end
     @validations << sum
     return false if @validations.size < 2
-    #puts "#{@validations[-1]} #{@validations[-2]}"
     @validations[-1] > @validations[-2] ? true : false
   end
   
