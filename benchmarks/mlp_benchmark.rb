@@ -15,7 +15,7 @@ Benchmarker.go('lib') do
   Benchmark.bm do |x|
     x.report do
       a = DBMLP.new(db, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-      a.train(training, testing, validation, 1000)
+      a.train(training, testing, validation, 10)
     end
   end
 

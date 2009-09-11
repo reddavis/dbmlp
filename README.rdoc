@@ -31,10 +31,10 @@ This is first release and because of that it's a bit slow, I'll probably try out
 
 == Benchmarks
 
-  The above example produces these times
+  The above example produces these times (3000 iterations)
   
                   user     system      total        real
-  DBMLP    9.100000   0.040000   9.140000 (  9.170872)
+  DBMLP        9.460000   0.150000   9.610000 ( 10.322743)
 
 == Copyright
 
