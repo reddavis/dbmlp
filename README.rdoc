@@ -12,6 +12,7 @@ This is first release and because of that it's a bit slow, I'll probably try out
   sudo gem install reddavis-db_mlp
 
 == How To Use
+
   require 'rubygems'
   require 'db_mlp'
   
@@ -28,6 +29,15 @@ This is first release and because of that it's a bit slow, I'll probably try out
   puts "[0,1] = > #{a.feed_forward([0,1]).inspect}"
   puts "[1,0] = > #{a.feed_forward([1,0]).inspect}"
   puts "[1,1] = > #{a.feed_forward([1,1]).inspect}"
+  
+== Test Reports
+
+If you want it to, the MLP can produce a test report. The basic idea is that at the end of training the MLP will feedforward again all the entries that you have passed into the validation attribute. The file contains data about the index, the data that was inputted, the target, the result and the error. Here's an example:
+
+  ID: 0	Attributes: [0, 0]	Target: 0	Resuts: 0.387170168937349	Error: 0.0749503698574878	
+  ID: 1	Attributes: [0, 1]	Target: 1	Resuts: 0.365112645315455	Error: 0.20154097656917	
+  ID: 2	Attributes: [1, 0]	Target: 1	Resuts: 0.40477576498281	Error: 0.1771459449759	
+  ID: 3	Attributes: [1, 1]	Target: 0	Resuts: 0.382819699838249	Error: 0.0732754612921235	
 
 == Benchmarks
 
