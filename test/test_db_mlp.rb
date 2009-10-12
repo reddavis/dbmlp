@@ -1,6 +1,26 @@
 require 'helper'
 
 class TestDBMLP < Test::Unit::TestCase
+  context "Testing Report" do
+    setup do
+      set_data_variables
+      db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
+      @test_results_path = File.dirname(File.expand_path(__FILE__)) + '/db/test_results.txt'
+      a = DBMLP.new(db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
+      a.train(@training, @testing, @validation, 1, @test_results_path)
+    end
+    
+    should "create a test results .txt file" do
+      assert File.exists?(@test_results_path)
+    end
+    
+    should "contain some text" do
+      File.open(@test_results_path, 'r+') do |file|
+        assert !file.readlines.empty?
+      end
+    end
+  end
+  
   context "DBMLP Instance" do
     setup do
       set_data_variables
@@ -72,26 +92,8 @@ class TestDBMLP < Test::Unit::TestCase
       end
       assert_not_equal before, after
     end
-  
-    should "return the error (array) after training" do
-      a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-      error = a.train(@training, @testing, @validation, 1)
-      assert_kind_of Array, error
-    end
   end
-  
-  context "Training Process" do
-    setup do
-      set_data_variables
-      db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
-      @a = DBMLP.new(db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-    end
     
-    should "go through whole training process" do
-      assert @a.train(@training, @testing, @validation, 2)
-    end
-  end
-  
   context "DB for a new mlp" do
     setup do
       db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
