@@ -8,7 +8,7 @@ module CreateTestResults
     test_examples.each_with_index do |example, index|
       input, target = example[0], example[1]
       feed_forward(input)
-      info = "ID: #{index}\tAttributes: #{input.inspect}\tTarget: #{target}\tResuts: #{last_outputs}\tError: #{calculate_error(target)}\t"
+      info = "ID: #{index}\tAttributes: #{input.inspect}\tTarget: #{target.inspect}\tResuts: #{last_outputs.inspect}\tError: #{calculate_error(target)}\t"
       results << info
     end
     
