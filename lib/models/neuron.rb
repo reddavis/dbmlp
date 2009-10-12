@@ -1,6 +1,6 @@
 class Neuron
   include DataMapper::Resource
-  property :id, Integer, :serial => true
+  property :id, Serial
   property :layer_index, Integer, :index => true
   property :last_output, Float
   property :db_weights, String
