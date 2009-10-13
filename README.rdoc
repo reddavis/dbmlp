@@ -8,8 +8,8 @@ This is first release and because of that it's a bit slow, I'll probably try out
 
 == Install
 
-  gem sources -a http://gems.github.com
-  sudo gem install reddavis-db_mlp
+  gem sources -a -http://gemcutter.org
+  sudo gem install db_mlp
 
 == How To Use
 
