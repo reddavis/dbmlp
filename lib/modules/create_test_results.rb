@@ -4,11 +4,12 @@ module CreateTestResults
   
   def create_test_report(test_examples, report_path)
     results = []
+    results << "ID\tAttributes\tTarget\tResults\tError" # Add the headers
     
     test_examples.each_with_index do |example, index|
       input, target = example[0], example[1]
       feed_forward(input)
-      info = "ID: #{index}\tAttributes: #{input.inspect}\tTarget: #{target.inspect}\tResuts: #{last_outputs.inspect}\tError: #{calculate_error(target)}\t"
+      info = "#{index}\t#{input.inspect}\t#{target.inspect}\t#{last_outputs.inspect}\t#{calculate_error(target)}"
       results << info
     end
     
