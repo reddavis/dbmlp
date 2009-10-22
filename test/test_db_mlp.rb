@@ -139,7 +139,7 @@ class TestDBMLP < Test::Unit::TestCase
       assert_equal 3, a.inspect.first.last.weights.size
     end
   end
-  
+    
   private
   
   def set_data_variables
