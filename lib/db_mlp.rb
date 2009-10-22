@@ -4,11 +4,13 @@ require File.expand_path(File.dirname(__FILE__) + '/models/neuron')
 require File.expand_path(File.dirname(__FILE__) + '/modules/create_test_results')
 require File.expand_path(File.dirname(__FILE__) + '/modules/db')
 require File.expand_path(File.dirname(__FILE__) + '/modules/training')
+require File.expand_path(File.dirname(__FILE__) + '/modules/test_results_parser')
 
 class DBMLP
   include DB
   include Training
   include CreateTestResults
+  include TestResultsParser
     
   def initialize(db_path, options={})
     @input_size = options[:inputs]
