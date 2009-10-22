@@ -10,7 +10,8 @@ module TestResultsParser
       File.open(filepath) do |f|
         while line = f.gets do
           next if line.match(/ID/)
-          error = line.match(/(\d+\.\d+)$/)[1]
+          error = line.match(/\t(\d+\..+)$/)[1]
+          puts error
           total += 1
           if error.to_f < error_limit
             correct += 1
