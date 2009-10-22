@@ -11,7 +11,6 @@ module TestResultsParser
         while line = f.gets do
           next if line.match(/ID/)
           error = line.match(/\t(\d+\..+)$/)[1]
-          puts error
           total += 1
           if error.to_f < error_limit
             correct += 1
