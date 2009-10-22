@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{db_mlp}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["reddavis"]
@@ -36,9 +36,11 @@ Gem::Specification.new do |s|
      "lib/models/neuron.rb",
      "lib/modules/create_test_results.rb",
      "lib/modules/db.rb",
+     "lib/modules/test_results_parser.rb",
      "lib/modules/training.rb",
      "profiling/profile.rb",
      "test/db/test.txt",
+     "test/db/test_results_test/results.txt",
      "test/helper.rb",
      "test/test_db_mlp.rb"
   ]
