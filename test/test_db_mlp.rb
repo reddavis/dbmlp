@@ -26,7 +26,7 @@ class TestDBMLP < Test::Unit::TestCase
       set_data_variables
       @db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
     end
-  
+        
     should "contain 4 layers" do
       a = DBMLP.new(@db_path, :hidden_layers => [2, 2, 2], :output_nodes => 2, :inputs => 2)
       assert_equal 4, a.inspect.size

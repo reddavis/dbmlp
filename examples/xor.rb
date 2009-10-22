@@ -1,8 +1,11 @@
-require File.dirname(__FILE__) + '/../lib/db_mlp'
+require File.expand_path(File.dirname(__FILE__) + '/../lib/db_mlp')
 require 'benchmark'
 
 db = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/data.rdb"
-a = DBMLP.new(db, :hidden_layers => [2, 2], :output_nodes => 1, :inputs => 2)
+a = DBMLP.new(db, :hidden_layers => [2], 
+                  :output_nodes => 1, 
+                  :inputs => 2,
+                  :verbose => true)
 
 times = Benchmark.measure do
 
@@ -12,7 +15,7 @@ times = Benchmark.measure do
   testing = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
   validation = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
   
-  a.train(training, testing, validation, 3001)
+  a.train(training, testing, validation, 3000)
   
   puts "Test data"
   puts "[0,0] = > #{a.feed_forward([0,0]).inspect}"

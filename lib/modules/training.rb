@@ -82,7 +82,7 @@ module Training
       if layer_index == 0
         compute_output_deltas(layer, targets)
       else
-        compute_hidden_deltas(layer, targets)
+        compute_hidden_deltas(layer, targets, reversed_network[layer_index-1])
       end
     end
   end
@@ -94,10 +94,10 @@ module Training
     end
   end
   
-  def compute_hidden_deltas(layer, targets)
+  def compute_hidden_deltas(layer, targets, previous_layer)
     layer.each_with_index do |neuron, neuron_index|
       error = 0
-      @network.last.each do |output_neuron|
+      previous_layer.each do |output_neuron|
         error += output_neuron.delta * output_neuron.weights[neuron_index]
       end
       output = neuron.last_output

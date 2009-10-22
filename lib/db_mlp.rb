@@ -1,4 +1,4 @@
-#require 'rubygems'
+require 'rubygems'
 require 'datamapper'
 require File.expand_path(File.dirname(__FILE__) + '/models/neuron')
 require File.expand_path(File.dirname(__FILE__) + '/modules/create_test_results')
