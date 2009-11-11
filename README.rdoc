@@ -35,7 +35,7 @@ You can also tell the network what iterations you would like it to perform valid
   DBMLP.new(path_to_db, :hidden_layers => [2], 
                         :output_nodes => 1, 
                         :inputs => 2,
-                        :validations_on => 100)
+                        :validate_every => 100)
   
 == Test Reports
 
