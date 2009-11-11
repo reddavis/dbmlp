@@ -30,6 +30,13 @@ This is first release and because of that it's a bit slow, I'll probably try out
   puts "[1,0] = > #{a.feed_forward([1,0]).inspect}"
   puts "[1,1] = > #{a.feed_forward([1,1]).inspect}"
   
+You can also tell the network what iterations you would like it to perform validation on:
+
+  DBMLP.new(path_to_db, :hidden_layers => [2], 
+                        :output_nodes => 1, 
+                        :inputs => 2,
+                        :validations_on => 100)
+  
 == Test Reports
 
 If you want it to, the MLP can produce a test report. The basic idea is that at the end of training the MLP will feedforward again all the entries that you have passed into the validation attribute. The file contains data about the index, the data that was inputted, the target, the result and the error. Here's an example:

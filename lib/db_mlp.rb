@@ -17,6 +17,7 @@ class DBMLP
     @hidden_layers = options[:hidden_layers]
     @number_of_output_nodes = options[:output_nodes]
     @verbose = options[:verbose] || false
+    @validate_every = options[:validate_every] || 200
     connect_to_db(db_path)
     setup_network
   end

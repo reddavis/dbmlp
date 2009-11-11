@@ -139,31 +139,49 @@ class TestDBMLP < Test::Unit::TestCase
       assert_equal 3, a.inspect.first.last.weights.size
     end
   end
+  
+  context "Validations" do
+    setup do
+      $stdout = StringIO.new
+      @db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
+      set_data_variables 
+    end
     
+    should "validate every 1 iterations" do
+      a = DBMLP.new(@db_path, :hidden_layers => [2], 
+                              :output_nodes => 1, 
+                              :inputs => 2,
+                              :verbose => true,
+                              :validate_every => 2)
+                              
+      a.train(@training, @testing, @validation, 4)
+      output = $stdout.string.scan(/Validating/)
+      assert_equal 2, output.size
+    end
+  end
+
+   context "Testing Results Parser" do
+     setup do
+       @test_results = File.dirname(__FILE__) + '/db/test_results_test/results.txt'
+     end
+
+     should "return 100%" do
+       result = DBMLP.parse_test_results(@test_results, 1)
+       assert_equal 100, result
+     end
+
+     should "return 50%" do
+       result = DBMLP.parse_test_results(@test_results, 0.00002)
+       assert_equal 50, result
+     end
+   end
+   
   private
   
   def set_data_variables
     @training = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
     @testing = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
     @validation = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
-  end
-  
-  public
-  
-  context "Testing Results Parser" do
-    setup do
-      @test_results = File.dirname(__FILE__) + '/db/test_results_test/results.txt'
-    end
-    
-    should "return 100%" do
-      result = DBMLP.parse_test_results(@test_results, 1)
-      assert_equal 100, result
-    end
-    
-    should "return 50%" do
-      result = DBMLP.parse_test_results(@test_results, 0.00002)
-      assert_equal 50, result
-    end
   end
 
 end

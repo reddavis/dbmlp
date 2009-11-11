@@ -5,7 +5,8 @@ module Training
   def train_and_cross_validate(training, validations, n)
     errors = []
     1.upto(n) do |i|
-      if i % 200 == 0
+      if i % @validate_every == 0
+        print_message("Validating at #{i}")
         if validate(validations)
           print_message("Stopping at #{i}")
           break
