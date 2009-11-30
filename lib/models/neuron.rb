@@ -37,7 +37,6 @@ class Neuron
   def activation_function(input)
     sum = 0
     input.each_with_index do |n, index|
-#      puts "index:#{index} weight: #{@weights[index]} input: #{n} input_size: #{input.size}"
       sum +=  weights[index] * n
     end
     sum += weights.last * -1 #bias node
@@ -50,7 +49,7 @@ class Neuron
   end
   
   def create_weights(number_of_inputs)
-    # Create random weights between 0 & 1
+    # Create random weights between -1 & 1
     # Plus another one for the bias node
     weights = []
     (number_of_inputs + 1).times do

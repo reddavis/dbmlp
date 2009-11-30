@@ -9,7 +9,7 @@ module DB
       # Hidden Layers
       @hidden_layers.each_with_index do |number_of_neurons, index|
         layer = []
-        inputs = index == 0 ? @input_size : @hidden_layers[index-1]#.size
+        inputs = index == 0 ? @input_size : @hidden_layers[index-1]
         number_of_neurons.times { layer << Neuron.new(inputs, index) }
         @network << layer
         layer.each {|x| x.save!}
@@ -21,7 +21,6 @@ module DB
       @network << layer
       layer.each {|x| x.save!}
     else
-      # Problematic area???
       @hidden_layers.each_index do |index|
         layer = Neuron.all(:layer_index => index, :order => [:id.asc])
         @network << layer

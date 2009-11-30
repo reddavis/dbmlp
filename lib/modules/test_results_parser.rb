@@ -5,6 +5,9 @@ module TestResultsParser
   
   module Parser
     
+    # This goes through the test results file created by calling
+    # #create_test_report. It then tells you how accurate the 
+    # classification has been on the testing data.
     def parse_test_results(filepath, error_limit=0.05)
       total, correct = 0.0, 0.0
       File.open(filepath) do |f|

@@ -2,6 +2,7 @@ module CreateTestResults
   
   private
   
+  # Create a tab seperated file
   def create_test_report(test_examples, report_path)
     results = []
     results << "ID\tAttributes\tTarget\tResults\tError" # Add the headers
@@ -21,6 +22,7 @@ module CreateTestResults
     end
   end
   
+  # Calculates sum-of-squares error
   def calculate_error(targets)
     outputs = last_outputs
     sum = 0

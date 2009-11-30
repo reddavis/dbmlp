@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'datamapper'
 require File.expand_path(File.dirname(__FILE__) + '/models/neuron')
 require File.expand_path(File.dirname(__FILE__) + '/modules/create_test_results')
@@ -16,8 +15,9 @@ class DBMLP
     @input_size = options[:inputs]
     @hidden_layers = options[:hidden_layers]
     @number_of_output_nodes = options[:output_nodes]
-    @verbose = options[:verbose] || false
+    @verbose = options[:verbose]
     @validate_every = options[:validate_every] || 200
+    
     connect_to_db(db_path)
     setup_network
   end
