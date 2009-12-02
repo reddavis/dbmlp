@@ -1,45 +1,18 @@
 require 'helper'
 
-class TestDBMLP < Test::Unit::TestCase
-  context "Testing Report" do
-    setup do
-      set_data_variables
-      db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
-      @test_results_path = File.dirname(File.expand_path(__FILE__)) + '/db/test_results.txt'
-      a = DBMLP.new(db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-      a.train(@training, @testing, @validation, 1, @test_results_path)
-    end
-    
-    should "create a test results .txt file" do
-      assert File.exists?(@test_results_path)
-    end
-    
-    should "contain some text" do
-      File.open(@test_results_path, 'r+') do |file|
-        assert !file.readlines.empty?
-      end
-    end
-  end
-  
+class TestDBMLP < Test::Unit::TestCase  
   context "DBMLP Instance" do
     setup do
       set_data_variables
-      @db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
+      @db_path = saved_db_path
     end
         
-    should "contain 4 layers" do
+    should "contain 4 layers (including output layer)" do
       a = DBMLP.new(@db_path, :hidden_layers => [2, 2, 2], :output_nodes => 2, :inputs => 2)
       assert_equal 4, a.inspect.size
     end
     
-    should "contain saved 3 layers" do
-      DBMLP.new(@db_path, :hidden_layers => [2, 2], :output_nodes => 2, :inputs => 2)
-      b = Neuron.all.map {|x| x.layer_index}.uniq.size
-      assert_equal 3, b
-    end
-    
     should "contain 1 output node" do
-      DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes =>4, :inputs => 2)
       a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
       assert_equal 1, a.inspect.last.size
     end
@@ -59,91 +32,34 @@ class TestDBMLP < Test::Unit::TestCase
       assert_kind_of Array, a.feed_forward([0,1])
     end
   
-    should "save its neurons deltas" do
+    should "set its neurons deltas" do
       a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
       a.train(@training, @testing, @validation, 1)
-      b = Neuron.all(:delta.not => nil)
-      assert !b.empty?
-    end
-  
-    should "save its output neurons weights" do
-      a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-      before = Neuron.first(:layer_index => -1).weights.inject([]) do |array, n|
-        array << n
-      end
-    
-      a.train(@training, @testing, @validation, 1)
-      
-      after = Neuron.first(:layer_index => -1).weights.inject([]) do |array, n|
-        array << n
-      end
-      assert_not_equal before, after
-    end
-  
-    should "update its hidden neurons weights" do
-      a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-      before = Neuron.first(:layer_index => 0).weights.inject([]) do |array, n|
-        array << n
-      end
-    
-      a.train(@training, @testing, @validation, 1)
-      after = Neuron.first(:layer_index => 0).weights.inject([]) do |array, n|
-        array << n
-      end
-      assert_not_equal before, after
+      b = a.inspect.flatten.map {|x| x.delta}.delete_if {|x| !x.nil?}
+      assert b.empty?
     end
   end
     
-  context "DB for a new mlp" do
+  context "Network Structure" do
     setup do
-      db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
-      @a = DBMLP.new(db_path, :hidden_layers => [2, 2], :output_nodes => 2, :inputs => 2)
+      @db_path = saved_db_path
     end
-  
-    should "save 6 neurons" do
-      assert_equal 6, Neuron.count
-    end
-    
-    should "save 2 hidden neurons in the first hidden layer" do
-      assert_equal 2, Neuron.count(:layer_index => 0)
-    end
-  end
-
-  context "Neuron" do
-    setup do
-      @db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
-    end
-  
-    should "have 2 weights on output neuron" do
-      a = DBMLP.new(@db_path, :hidden_layers => [1], :output_nodes => 1, :inputs => 2)
-      assert_equal 2, a.inspect.last.last.weights.size
-    end
-    
-    should "have saved 2 weights on output neuron" do
-      a = DBMLP.new(@db_path, :hidden_layers => [1], :output_nodes => 1, :inputs => 2)
-      assert_equal 2, Neuron.first(:layer_index => -1).weights.size
-    end
-    
+          
     should "have 3 weights on output neuron" do
       a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
       assert_equal 3, a.inspect.last.last.weights.size
     end
     
-    should "have saved 3 weights on output neuron" do
+    should "have saved 2 neurons on the first hidden layer" do
       a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-      assert_equal 3, Neuron.first(:layer_index => -1).weights.size
-    end
-    
-    should "create a hidden neuron with 3 weights" do
-      a = DBMLP.new(@db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
-      assert_equal 3, a.inspect.first.last.weights.size
+      assert_equal 2, a.inspect[0].size
     end
   end
   
   context "Validations" do
     setup do
       $stdout = StringIO.new
-      @db_path = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/db/data.rdb"
+      @db_path = saved_db_path
       set_data_variables 
     end
     
@@ -159,24 +75,76 @@ class TestDBMLP < Test::Unit::TestCase
       assert_equal 2, output.size
     end
   end
+  
+  context "Testing Report" do
+    setup do
+      set_data_variables
+      db_path = saved_db_path
+      @test_results_path = File.dirname(File.expand_path(__FILE__)) + '/db/test_results.txt'
+      a = DBMLP.new(db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
+      a.train(@training, @testing, @validation, 1, @test_results_path)
+    end
+    
+    should "create a test results .txt file" do
+      assert File.exists?(@test_results_path)
+    end
+    
+    should "contain some text" do
+      File.open(@test_results_path, 'r+') do |file|
+        assert !file.readlines.empty?
+      end
+    end
+  end
 
-   context "Testing Results Parser" do
-     setup do
-       @test_results = File.dirname(__FILE__) + '/db/test_results_test/results.txt'
-     end
+  context "Testing Results Parser" do
+    setup do
+      @test_results = File.dirname(__FILE__) + '/db/test_results_test/results.txt'
+    end
 
-     should "return 100%" do
-       result = DBMLP.parse_test_results(@test_results, 1)
-       assert_equal 100, result
-     end
+    should "return 100%" do
+      result = DBMLP.parse_test_results(@test_results, 1)
+      assert_equal 100, result
+    end
 
-     should "return 50%" do
-       result = DBMLP.parse_test_results(@test_results, 0.00002)
-       assert_equal 50, result
-     end
-   end
+    should "return 50%" do
+      result = DBMLP.parse_test_results(@test_results, 0.00002)
+      assert_equal 50, result
+    end
+  end
+  
+  context "IO" do
+    context "Save" do
+      setup do
+        db_path = saved_db_path
+        FileUtils.rm(db_path, :force => true)
+        @a = DBMLP.new(db_path, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
+      end
+    
+      should "create a file" do
+        @a.save
+        assert File.exists?(saved_db_path)
+      end
+    end
+    
+    context "Load" do
+      setup do
+        @db_path = saved_db_path
+        FileUtils.rm(@db_path, :force => true)
+        DBMLP.new(@db_path, :hidden_layers => [8], :output_nodes => 1, :inputs => 2).save
+      end
+    
+      should "create a file" do
+        a = DBMLP.load(@db_path)
+        assert_equal 8, a.inspect[0].size
+      end
+    end
+  end
    
   private
+  
+  def saved_db_path
+    File.expand_path(File.dirname(__FILE__) + '/db/db.txt')
+  end
   
   def set_data_variables
     @training = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]

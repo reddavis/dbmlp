@@ -1,27 +1,24 @@
 class Neuron
-  include DataMapper::Resource
-  property :id, Serial
-  property :layer_index, Integer, :index => true
-  property :last_output, Float
-  property :db_weights, String
-  property :delta, Float
+  
+  attr_accessor :delta
+  
+  attr_reader :layer_index, :last_output
   
   def initialize(number_of_inputs, layer_index)
     create_weights(number_of_inputs)
-    self.layer_index = layer_index
+    @layer_index = layer_index
   end
   
   def fire(input)
-    self.last_output = activation_function(input)
+    @last_output = activation_function(input)
   end
   
   def update_weight(inputs, training_rate)
-    inputs << -1  # Add the bias
-    new_weights = weights
+    inputs << -1  # Add the bias node
+        
     weights.each_index do |i|
-      new_weights[i] +=  training_rate * delta * inputs[i]
+      weights[i] +=  training_rate * delta * inputs[i]
     end
-    self.db_weights = new_weights.join(',')
   end
   
   def inspect
@@ -29,7 +26,7 @@ class Neuron
   end
   
   def weights
-    db_weights.split(',').map {|x| x.to_f}
+    @weights ||= []
   end
   
   private
@@ -51,11 +48,9 @@ class Neuron
   def create_weights(number_of_inputs)
     # Create random weights between -1 & 1
     # Plus another one for the bias node
-    weights = []
     (number_of_inputs + 1).times do
       weights << (rand > 0.5 ? -rand : rand)
     end
-    self.db_weights = weights.join(',')
   end
   
 end

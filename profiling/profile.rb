@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../lib/db_mlp'
 require 'rubygems'
 require 'ruby-prof'
 
-db = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/../benchmarks/data.rdb"
+db = File.dirname(File.expand_path(__FILE__)) + "/../benchmarks/data.txt"
 
 a = DBMLP.new(db, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
 

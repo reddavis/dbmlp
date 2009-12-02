@@ -1,10 +1,8 @@
 = Multi-Layer Perceptron Neural Network
 
-This is a sqlite backed version of my previous MLP.
+This is a Multi-Layer Perceptron Neural Network that uses early stopping to prevent itself from overfitting.
 
-This version also provides training validation to prevent the MLP from overfitting.
-
-This is first release and because of that it's a bit slow, I'll probably try out using Memcached or something else as its data store.
+It also saves its state so that you can train the network and then re-use it again when-ever you want.
 
 == Install
 
@@ -30,7 +28,13 @@ This is first release and because of that it's a bit slow, I'll probably try out
   puts "[1,0] = > #{a.feed_forward([1,0]).inspect}"
   puts "[1,1] = > #{a.feed_forward([1,1]).inspect}"
   
-You can also tell the network what iterations you would like it to perform validation on:
+After training has finished the network is saved to the file path specified. When you want to re-use the network just call:
+
+  a = DBMLP.load(path_to_db)
+  
+  a.feed_for_forward([0,1])
+  
+You can also tell the network what iterations you would like it to perform validations on:
 
   DBMLP.new(path_to_db, :hidden_layers => [2], 
                         :output_nodes => 1, 
@@ -51,7 +55,7 @@ If you want it to, the MLP can produce a test report. The basic idea is that at 
   The above example produces these times (3000 iterations)
   
                   user     system      total        real
-  DBMLP        9.460000   0.150000   9.610000 ( 10.322743)
+  DBMLP        0.870000   0.000000   0.870000    (0.877338)
 
 == Copyright
 

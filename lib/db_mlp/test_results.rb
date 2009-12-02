@@ -1,4 +1,4 @@
-module CreateTestResults
+module TestResults
   
   private
   

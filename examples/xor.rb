@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../lib/db_mlp')
 require 'benchmark'
 
-db = "sqlite3://#{File.dirname(File.expand_path(__FILE__))}/data.rdb"
+db = File.dirname(File.expand_path(__FILE__)) + "/data.txt"
 a = DBMLP.new(db, :hidden_layers => [2], 
                   :output_nodes => 1, 
                   :inputs => 2,
