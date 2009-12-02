@@ -95,22 +95,6 @@ class TestDBMLP < Test::Unit::TestCase
       end
     end
   end
-
-  context "Testing Results Parser" do
-    setup do
-      @test_results = File.dirname(__FILE__) + '/db/test_results_test/results.txt'
-    end
-
-    should "return 100%" do
-      result = DBMLP.parse_test_results(@test_results, 1)
-      assert_equal 100, result
-    end
-
-    should "return 50%" do
-      result = DBMLP.parse_test_results(@test_results, 0.00002)
-      assert_equal 50, result
-    end
-  end
   
   context "IO" do
     context "Save" do
