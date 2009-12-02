@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{db_mlp}
-  s.version = "0.0.7"
+  s.version = "0.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["reddavis"]
-  s.date = %q{2009-11-11}
+  s.date = %q{2009-12-02}
   s.description = %q{Database backed Multi-Layer Perceptron Neural Network in Ruby}
   s.email = %q{reddavis@gmail.com}
   s.extra_rdoc_files = [
@@ -23,26 +23,26 @@ Gem::Specification.new do |s|
      "README.rdoc",
      "Rakefile",
      "VERSION",
-     "benchmarks/data.rdb",
+     "benchmarks/data.txt",
      "benchmarks/mlp_benchmark.rb",
      "db_mlp.gemspec",
      "examples/backpropagation_example.rb",
      "examples/data.rdb",
+     "examples/data.txt",
      "examples/patterns_with_base_noise.rb",
      "examples/patterns_with_noise.rb",
      "examples/training_patterns.rb",
      "examples/xor.rb",
      "lib/db_mlp.rb",
-     "lib/models/neuron.rb",
-     "lib/modules/create_test_results.rb",
-     "lib/modules/db.rb",
-     "lib/modules/test_results_parser.rb",
-     "lib/modules/training.rb",
+     "lib/db_mlp/network.rb",
+     "lib/db_mlp/neuron.rb",
+     "lib/db_mlp/test_results.rb",
+     "lib/db_mlp/test_results_parser.rb",
+     "lib/db_mlp/training.rb",
      "profiling/profile.rb",
-     "test/db/test.txt",
-     "test/db/test_results_test/results.txt",
      "test/helper.rb",
-     "test/test_db_mlp.rb"
+     "test/test_db_mlp.rb",
+     "test/test_neuron.rb"
   ]
   s.homepage = %q{http://github.com/reddavis/dbmlp}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -52,6 +52,7 @@ Gem::Specification.new do |s|
   s.test_files = [
     "test/helper.rb",
      "test/test_db_mlp.rb",
+     "test/test_neuron.rb",
      "examples/backpropagation_example.rb",
      "examples/patterns_with_base_noise.rb",
      "examples/patterns_with_noise.rb",
