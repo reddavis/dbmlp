@@ -13,13 +13,13 @@ It also saves its state so that you can train the network and then re-use it aga
 
   require 'rubygems'
   require 'db_mlp'
-  
+
   a = DBMLP.new(path_to_db, :hidden_layers => [2], :output_nodes => 1, :inputs => 2)
 
   training = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
   testing = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
   validation = [[[0,0], [0]], [[0,1], [1]], [[1,0], [1]], [[1,1], [0]]]
-  
+
   a.train(training, testing, validation, number_of_training_iterations)
   
   puts "Test data"
@@ -31,7 +31,7 @@ It also saves its state so that you can train the network and then re-use it aga
 After training has finished the network is saved to the file path specified. When you want to re-use the network just call:
 
   a = DBMLP.load(path_to_db)
-  
+
   a.feed_for_forward([0,1])
   
 You can also tell the network what iterations you would like it to perform validations on:
