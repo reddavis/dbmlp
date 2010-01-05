@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["reddavis"]
-  s.date = %q{2009-12-02}
+  s.date = %q{2010-01-05}
   s.description = %q{Database backed Multi-Layer Perceptron Neural Network in Ruby}
   s.email = %q{reddavis@gmail.com}
   s.extra_rdoc_files = [
@@ -40,6 +40,7 @@ Gem::Specification.new do |s|
      "lib/db_mlp/test_results_parser.rb",
      "lib/db_mlp/training.rb",
      "profiling/profile.rb",
+     "test/db/db.txt",
      "test/helper.rb",
      "test/test_db_mlp.rb",
      "test/test_neuron.rb"
