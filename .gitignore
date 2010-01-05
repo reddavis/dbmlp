@@ -1,4 +1,3 @@
 *.rdb
 test_results.txt
 pkg/*
-test/db/*
